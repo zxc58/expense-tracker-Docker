@@ -18,7 +18,7 @@ const App = (props) => {
       (async function getUser () {
         const instance = createInstance()
         const [userRes, categoriesRes, recordRes] = await Promise.all([
-          instance.get('/users'), instance.get('/categories'), instance.get('/records')
+          instance.get('/api/users'), instance.get('/api/categories'), instance.get('/api/records')
         ])
         const records = recordRes.data.records.map(e => ({ ...e, display: true }))
         setUser(userRes.data.user)

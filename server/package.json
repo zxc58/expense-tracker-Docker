@@ -8,7 +8,8 @@
     "dev": "nodemon app.js",
     "test": "jest",
     "lint": "npx eslint  \"**/*.js\" --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "init_db": "npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",

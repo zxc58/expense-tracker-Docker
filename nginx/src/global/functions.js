@@ -3,7 +3,7 @@ import axios from 'axios'
 //
 export const deleteRecord = (id, setRecords) => async () => {
   const instance = createInstance()
-  const response = await instance.delete(`/records/${id}`)
+  const response = await instance.delete(`/api/records/${id}`)
   setRecords(prevRecords => {
     const index = prevRecords.findIndex(e => String(e.id) === String(response.data.deleteData.id))
     if (index !== -1) { prevRecords.splice(index, 1) }
@@ -23,8 +23,8 @@ export const submitRecord = (id, setRecords, navigate) => async (e) => {
   }
   try {
     const returnRecord = id
-      ? (await instance.put(`/records/${id}`, newRecord)).data.updateData
-      : (await instance.post('/records', newRecord)).data.postData
+      ? (await instance.put(`/api/records/${id}`, newRecord)).data.updateData
+      : (await instance.post('/api/records', newRecord)).data.postData
     returnRecord.display = true
     setRecords(prevRecords => {
       const deletePosition = prevRecords.findIndex(e => String(e.id) === String(id))
@@ -63,7 +63,7 @@ export const signIn = (setIsSignin, navigate) => async (e) => {
   for (const input of document.getElementById('signInForm').getElementsByTagName('input')) {
     signInData[input.name] = input.value
   }
-  const response = await axios.post(`${process.env.REACT_APP_BACK_END_HOST}/users/signin`, signInData)
+  const response = await axios.post(`${process.env.REACT_APP_BACK_END_HOST}/api/users/signin`, signInData)
   window.localStorage.setItem('jwtToken', response.data.token)
   setIsSignin(true)
   navigate('/')
@@ -75,7 +75,7 @@ export const signUp = (navigate) => async (e) => {
   for (const input of document.getElementById('sign-up-form').getElementsByTagName('input')) {
     signUpData[input.name] = input.value
   }
-  const response = await axios.post(`${process.env.REACT_APP_BACK_END_HOST}/users/signup`, signUpData)
+  const response = await axios.post(`${process.env.REACT_APP_BACK_END_HOST}/api/users/signup`, signUpData)
   if (response?.data?.status && response?.data?.message === '成功註冊') {
     navigate('/')
   }

@@ -3,19 +3,17 @@ services:
   front:
     restart: on-failure
     build: ./nginx
-    # depends_on:
-    #   - server
+    depends_on:
+      - server
     ports:
       - "80:80"
   server:
     restart: on-failure
     build: ./server
     env_file:
-      - ./server.env
+      - ./backend.env
     depends_on:
       - db
-    # ports:
-    #   - "80:80"
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -27,6 +25,4 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: password
       MYSQL_RANDOM_ROOT_PASSWORD: password
-    ports:
-      - "3307:3307"
   
